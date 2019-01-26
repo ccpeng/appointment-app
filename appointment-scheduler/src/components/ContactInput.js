@@ -109,7 +109,7 @@ class ContactInput extends Component {
         Share your pet's information with us
       </StepLabel>
       <StepContent>
-        <p>
+        <div>
           <section>
             <TextField
               style={{ display: "block" }}
@@ -160,7 +160,7 @@ class ContactInput extends Component {
               onChange={(evt, newValue) => this.handleTelephone(newValue)}
             />
           </section>
-        </p>
+        </div>
         {this.renderStepActions(this.props.index, isContactFormFilled)}
       </StepContent>
     </Step>

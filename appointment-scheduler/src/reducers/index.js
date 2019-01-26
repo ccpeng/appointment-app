@@ -35,7 +35,7 @@ const appointmentSlotReducer = (appointmentSlot = null, action) => {
   return appointmentSlot;
 }
 
-const firstNameReducer = (firstName = null, action) => {
+const firstNameReducer = (firstName = '', action) => {
   if (action.type === 'FIRSTNAME_SET') {
     return action.payload;
   }
@@ -43,7 +43,7 @@ const firstNameReducer = (firstName = null, action) => {
   return firstName;
 }
 
-const lastNameReducer = (lastName = null, action) => {
+const lastNameReducer = (lastName = '', action) => {
   if (action.type === 'LASTNAME_SET') {
     return action.payload;
   }
@@ -51,7 +51,7 @@ const lastNameReducer = (lastName = null, action) => {
   return lastName;
 }
 
-const addressReducer = (address = null, action) => {
+const addressReducer = (address = '', action) => {
   if (action.type === 'ADDRESS_SET') {
     return action.payload;
   }
@@ -59,7 +59,7 @@ const addressReducer = (address = null, action) => {
   return address;
 }
 
-const cityReducer = (city = null, action) => {
+const cityReducer = (city = '', action) => {
   if (action.type === 'CITY_SET') {
     return action.payload;
   }
@@ -67,7 +67,7 @@ const cityReducer = (city = null, action) => {
   return city;
 }
 
-const telephoneReducer = (telephone = null, action) => {
+const telephoneReducer = (telephone = '', action) => {
   if (action.type === 'TELEPHONE_SET') {
     return action.payload;
   }
@@ -75,7 +75,7 @@ const telephoneReducer = (telephone = null, action) => {
   return telephone;
 }
 
-const petNameReducer = (petName = null, action) => {
+const petNameReducer = (petName = '', action) => {
   if (action.type === 'PETNAME_SET') {
     return action.payload;
   }
