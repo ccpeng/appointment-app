@@ -101,8 +101,10 @@ class ContactInput extends Component {
       this.props.telephone &&
       this.props.petName;
 
+    const { active, index } = this.props;
+
     return (
-      <Step {...this.props}>
+      <Step active={active} index={index}>
       <StepLabel>
         Share your pet's information with us
       </StepLabel>

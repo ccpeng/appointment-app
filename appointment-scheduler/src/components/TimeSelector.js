@@ -93,8 +93,9 @@ class TimeSelector extends Component {
 
   render () {
     console.log('TimeSelector props:', this.props);
+    const { active, index } = this.props;
     return (
-      <Step {...this.props}>
+      <Step active={active} index={index}>
       <StepLabel>
         Choose an available time for your appointment
       </StepLabel>

@@ -91,7 +91,7 @@ const confirmationReducer = (isConfirmationOpen = false, action) => {
   return isConfirmationOpen;
 }
 
-const snackbarMessageReducer = (snackbarMessage = null, action) => {
+const snackbarMessageReducer = (snackbarMessage = '', action) => {
   if (action.type === 'SNACKBAR_MESSAGE_SET') {
     return action.payload;
   }
