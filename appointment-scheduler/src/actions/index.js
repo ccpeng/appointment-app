@@ -93,3 +93,24 @@ export const openSnackbar = booleanVal => {
     payload: booleanVal
   };
 }
+
+export const openDrawer = booleanVal => {
+  return {
+    type: 'DRAWER_OPEN',
+    payload: booleanVal
+  }
+}
+
+export const openAppScheduler = booleanVal => {
+  return {
+    type: 'APP_SCHEDULER_OPEN',
+    payload: booleanVal
+  }
+}
+
+export const openAppCancellation = booleanVal => {
+  return {
+    type: 'APP_CANCELLATION_OPEN',
+    payload: booleanVal
+  }
+}

@@ -101,10 +101,34 @@ const snackbarMessageReducer = (snackbarMessage = '', action) => {
 
 const snackbarReducer = (isSnackbarOpen = false, action) => {
   if (action.type === 'SNACKBAR_OPEN') {
-    return action.payload
+    return action.payload;
   }
 
   return isSnackbarOpen;
+}
+
+const drawerReducer = (isDrawerOpen = false, action) => {
+  if (action.type === 'DRAWER_OPEN') {
+    return action.payload;
+  }
+
+  return isDrawerOpen;
+}
+
+const appSchedulerReducer = (isAppSchedulerOpen = true, action) => {
+  if (action.type === 'APP_SCHEDULER_OPEN') {
+    return action.payload;
+  }
+
+  return isAppSchedulerOpen;
+}
+
+const appCancellationReducer = (isAppCancellationOpen = false, action) => {
+  if (action.type === 'APP_CANCELLATION_OPEN') {
+    return action.payload;
+  }
+
+  return isAppCancellationOpen;
 }
 
 export default combineReducers({
@@ -120,5 +144,8 @@ export default combineReducers({
   petName: petNameReducer,
   isConfirmationOpen: confirmationReducer,
   snackbarMessage: snackbarMessageReducer,
-  isSnackbarOpen: snackbarReducer
+  isSnackbarOpen: snackbarReducer,
+  isDrawerOpen: drawerReducer,
+  isAppSchedulerOpen: appSchedulerReducer,
+  isAppCancellationOpen: appCancellationReducer
 });
