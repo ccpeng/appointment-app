@@ -11,6 +11,33 @@ const activeIndexReducer = (activeIndex = 0, action) => {
   }
 };
 
+const activeCancellationIndexReducer = (activeCancellationIndex = 0, action) => {
+  switch(action.type) {
+    case 'STEPPER_NEXT_CANCEL':
+      return activeCancellationIndex + 1;
+    case 'STEPPER_PREVIOUS_CANCEL':
+      return activeCancellationIndex - 1;
+    default:
+      return activeCancellationIndex;
+  }
+};
+
+const appointmentVetReducer = (appointmentVet = 0, action) => {
+  if (action.type === 'VET_SELECTED') {
+    return action.payload;
+  }
+
+  return appointmentVet;
+}
+
+const appointmentVetCancelReducer = (appointmentVetCancel = 0, action) => {
+  if (action.type === 'VET_SELECTED_CANCEL') {
+    return action.payload;
+  }
+
+  return appointmentVetCancel;
+}
+
 const appointmentDateReducer = (appointmentDate = new Date(), action) => {
   if (action.type === 'DATE_SELECTED') {
     return action.payload;
@@ -43,12 +70,28 @@ const firstNameReducer = (firstName = '', action) => {
   return firstName;
 }
 
+const firstNameCancelReducer = (firstNameCancel = '', action) => {
+  if (action.type === 'FIRSTNAME_SET_CANCEL') {
+    return action.payload;
+  }
+
+  return firstNameCancel;
+}
+
 const lastNameReducer = (lastName = '', action) => {
   if (action.type === 'LASTNAME_SET') {
     return action.payload;
   }
 
   return lastName;
+}
+
+const lastNameCancelReducer = (lastNameCancel = '', action) => {
+  if (action.type === 'LASTNAME_SET_CANCEL') {
+    return action.payload;
+  }
+
+  return lastNameCancel;
 }
 
 const addressReducer = (address = '', action) => {
@@ -81,6 +124,14 @@ const petNameReducer = (petName = '', action) => {
   }
 
   return petName;
+}
+
+const petNameCancelReducer = (petNameCancel = '', action) => {
+  if (action.type === 'PETNAME_SET_CANCEL') {
+    return action.payload;
+  }
+
+  return petNameCancel;
 }
 
 const confirmationReducer = (isConfirmationOpen = false, action) => {
@@ -133,15 +184,21 @@ const appCancellationReducer = (isAppCancellationOpen = false, action) => {
 
 export default combineReducers({
   activeIndex: activeIndexReducer,
+  activeCancellationIndex: activeCancellationIndexReducer,
+  appointmentVet: appointmentVetReducer,
+  appointmentVetCancel: appointmentVetCancelReducer,
   appointmentDate: appointmentDateReducer,
   appointmentMeridiem: appointmentMeridiemReducer,
   appointmentSlot: appointmentSlotReducer,
   firstName: firstNameReducer,
+  firstNameCancel: firstNameCancelReducer,
   lastName: lastNameReducer,
+  lastNameCancel: lastNameCancelReducer,
   address: addressReducer,
   city: cityReducer,
   telephone: telephoneReducer,
   petName: petNameReducer,
+  petNameCancel: petNameCancelReducer,
   isConfirmationOpen: confirmationReducer,
   snackbarMessage: snackbarMessageReducer,
   isSnackbarOpen: snackbarReducer,

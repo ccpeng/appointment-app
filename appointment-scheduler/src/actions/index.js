@@ -4,9 +4,35 @@ export const stepperNext = () => {
   };
 }
 
+export const stepperNextCancel = () => {
+  return {
+    type: 'STEPPER_NEXT_CANCEL'
+  };
+}
+
 export const stepperPrevious = () => {
   return {
     type: 'STEPPER_PREVIOUS'
+  };
+}
+
+export const stepperPreviousCancel = () => {
+  return {
+    type: 'STEPPER_PREVIOUS_CANCEL'
+  };
+}
+
+export const selectVet = vet => {
+  return {
+    type: 'VET_SELECTED',
+    payload: vet
+  };
+}
+
+export const selectVetCancel = vet => {
+  return {
+    type: 'VET_SELECTED_CANCEL',
+    payload: vet
   };
 }
 
@@ -38,9 +64,23 @@ export const setFirstName = firstName => {
   };
 }
 
+export const setFirstNameCancel = firstName => {
+  return {
+    type: 'FIRSTNAME_SET_CANCEL',
+    payload: firstName
+  };
+}
+
 export const setLastName = lastName => {
   return {
     type: 'LASTNAME_SET',
+    payload: lastName
+  };
+}
+
+export const setLastNameCancel = lastName => {
+  return {
+    type: 'LASTNAME_SET_CANCEL',
     payload: lastName
   };
 }
@@ -69,6 +109,13 @@ export const setTelephone = telephone => {
 export const setPetName = petName => {
   return {
     type: 'PETNAME_SET',
+    payload: petName
+  };
+}
+
+export const setPetNameCancel = petName => {
+  return {
+    type: 'PETNAME_SET_CANCEL',
     payload: petName
   };
 }

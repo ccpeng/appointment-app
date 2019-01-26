@@ -6,9 +6,12 @@ import MenuItem from "material-ui/MenuItem";
 import SnackBar from "material-ui/Snackbar";
 import Card from "material-ui/Card";
 import { Stepper } from "material-ui/Stepper";
+import VetSelector from './VetSelector';
 import DateSelector from './DateSelector';
 import TimeSelector from './TimeSelector';
 import ContactInput from './ContactInput';
+import AppSearchInput from './AppSearchInput';
+import AppointmentSelector from './AppointmentSelector';
 import SubmitConfirmation from './SubmitConfirmation';
 import { 
   openSnackbar,
@@ -68,9 +71,20 @@ class AppointmentApp extends Component {
                 orientation="vertical"
                 linear={false}
                 >
+                <VetSelector />
                 <DateSelector />
                 <TimeSelector />
                 <ContactInput />
+              </Stepper>
+            }
+            {this.props.isAppCancellationOpen && 
+              <Stepper
+                activeStep={this.props.activeCancellationIndex}
+                orientation="vertical"
+                linear={false}
+                >
+                <AppSearchInput />
+                {/* <AppointmentSelector /> */}
               </Stepper>
             }
           </Card>
@@ -90,6 +104,7 @@ class AppointmentApp extends Component {
 const mapStateToProps = (state) => {
   return {
     activeIndex: state.activeIndex,
+    activeCancellationIndex: state.activeCancellationIndex,
     appointmentDate: state.appointmentDate,
     isSnackbarOpen: state.isSnackbarOpen,
     snackbarMessage: state.snackbarMessage,
