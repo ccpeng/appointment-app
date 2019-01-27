@@ -9,12 +9,14 @@ import {
   StepLabel,
   StepContent
 } from "material-ui/Stepper";
+import * as AppointmentService from '../service/AppointmentService';
 import { 
   stepperNextCancel, 
   setFirstNameCancel,
   setLastNameCancel,
   setPetNameCancel,
-  selectVetCancel
+  selectVetCancel,
+  setExistingAppointments
 } from '../actions';
 
 class AppSearchInput extends Component {
@@ -28,7 +30,9 @@ class AppSearchInput extends Component {
     this.handleAppointmentVetCancel = this.handleAppointmentVetCancel.bind(this);
   }
 
-  handleNext() {
+  async handleNext() {
+    const existingAppointments = await AppointmentService.getExistingAppointments;
+    this.props.setExistingAppointments(existingAppointments);
     this.props.stepperNextCancel();
   }
 
@@ -159,5 +163,6 @@ export default connect(mapStateToProps, {
   setFirstNameCancel,
   setLastNameCancel,
   setPetNameCancel,
-  selectVetCancel
+  selectVetCancel,
+  setExistingAppointments
 })(AppSearchInput);

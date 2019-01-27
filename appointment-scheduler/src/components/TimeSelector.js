@@ -96,34 +96,34 @@ class TimeSelector extends Component {
     const { active, index } = this.props;
     return (
       <Step active={active} index={index}>
-      <StepLabel>
-        Choose an available time for your appointment
-      </StepLabel>
-      <StepContent>
-        <SelectField
-          floatingLabelText="AM/PM"
-          value={this.props.appointmentMeridiem}
-          onChange={(evt, key, payload) =>
-            this.handleSetAppointmentMeridiem(payload)
-          }
-          selectionRenderer={value => (value ? "PM" : "AM")}
-        >
-          <MenuItem value={0} primaryText="AM" />
-          <MenuItem value={1} primaryText="PM" />
-        </SelectField>
-        <RadioButtonGroup
-          style={{
-            marginTop: 15,
-            marginLeft: 15
-          }}
-          name="appointmentTimes"
-          defaultSelected={this.props.appointmentSlot}
-          onChange={(evt, val) => this.handleSetAppointmentSlot(val)}
-        >
-          {this.renderAppointmentTimes()}
-        </RadioButtonGroup>
-        {this.renderStepActions(this.props.index)}
-      </StepContent>
+        <StepLabel>
+          Choose an available time for your appointment
+        </StepLabel>
+        <StepContent>
+          <SelectField
+            floatingLabelText="AM/PM"
+            value={this.props.appointmentMeridiem}
+            onChange={(evt, key, payload) =>
+              this.handleSetAppointmentMeridiem(payload)
+            }
+            selectionRenderer={value => (value ? "PM" : "AM")}
+          >
+            <MenuItem value={0} primaryText="AM" />
+            <MenuItem value={1} primaryText="PM" />
+          </SelectField>
+          <RadioButtonGroup
+            style={{
+              marginTop: 15,
+              marginLeft: 15
+            }}
+            name="appointmentTimes"
+            defaultSelected={this.props.appointmentSlot}
+            onChange={(evt, val) => this.handleSetAppointmentSlot(val)}
+          >
+            {this.renderAppointmentTimes()}
+          </RadioButtonGroup>
+          {this.renderStepActions(this.props.index)}
+        </StepContent>
     </Step>
     );
   }

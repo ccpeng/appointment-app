@@ -57,6 +57,13 @@ export const selectTimeSlot = slot => {
   };
 }
 
+export const selectTimeSlotCancel = slot => {
+  return {
+    type: 'TIMESLOT_SELECTED_CANCEL',
+    payload: slot
+  };
+}
+
 export const setFirstName = firstName => {
   return {
     type: 'FIRSTNAME_SET',
@@ -117,6 +124,13 @@ export const setPetNameCancel = petName => {
   return {
     type: 'PETNAME_SET_CANCEL',
     payload: petName
+  };
+}
+
+export const setExistingAppointments = existingAppointments => {
+  return {
+    type: 'EXISTING_APPOINTMENTS_SET',
+    payload: existingAppointments
   };
 }
 

@@ -84,7 +84,7 @@ class AppointmentApp extends Component {
                 linear={false}
                 >
                 <AppSearchInput />
-                {/* <AppointmentSelector /> */}
+                <AppointmentSelector />
               </Stepper>
             }
           </Card>

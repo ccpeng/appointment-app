@@ -62,6 +62,22 @@ const appointmentSlotReducer = (appointmentSlot = null, action) => {
   return appointmentSlot;
 }
 
+const appointmentSlotCancelReducer = (appointmentSlot = null, action) => {
+  if (action.type === 'TIMESLOT_SELECTED_CANCEL') {
+    return action.payload;
+  }
+
+  return appointmentSlot;
+}
+
+const existingAppointmentsReducer = (existingAppointments = [], action) => {
+  if (action.type === 'EXISTING_APPOINTMENTS_SET') {
+    return action.payload;
+  }
+
+  return existingAppointments;
+}
+
 const firstNameReducer = (firstName = '', action) => {
   if (action.type === 'FIRSTNAME_SET') {
     return action.payload;
@@ -190,6 +206,8 @@ export default combineReducers({
   appointmentDate: appointmentDateReducer,
   appointmentMeridiem: appointmentMeridiemReducer,
   appointmentSlot: appointmentSlotReducer,
+  appointmentSlotCancel: appointmentSlotCancelReducer,
+  existingAppointments: existingAppointmentsReducer,
   firstName: firstNameReducer,
   firstNameCancel: firstNameCancelReducer,
   lastName: lastNameReducer,
