@@ -102,16 +102,16 @@ class AppointmentSelector extends Component {
   render() {
     console.log('AppointmentSelector props', this.props);
     const { active, index } = this.props;
-
     const isAppointmentSelected = this.props.appointmentSlotCancel !== null;
-    console.log('isAppointmentSelected', isAppointmentSelected);
+    
     return (
       <Step active={active} index={index}>
         <StepLabel>
           Choose the appointment to cancel
         </StepLabel>
         <StepContent>
-          {this.props.existingAppointments.length > 0 && 
+          {this.props.existingAppointments.length > 0 
+          ? 
             <RadioButtonGroup
             style={{
               marginTop: 15,
@@ -123,8 +123,7 @@ class AppointmentSelector extends Component {
             >
             {this.renderAppointmentTimes()}
             </RadioButtonGroup> 
-          }
-          {this.props.existingAppointments.length == 0 &&
+          : 
             <p>
               No existing appointments
             </p>
