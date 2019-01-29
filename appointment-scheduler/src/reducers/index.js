@@ -38,6 +38,14 @@ const appointmentVetCancelReducer = (appointmentVetCancel = 0, action) => {
   return appointmentVetCancel;
 }
 
+const appointmentOwnerReducer = (appointmentOwner = 0, action) => {
+  if (action.type === 'OWNER_SELECTED') {
+    return action.payload;
+  }
+
+  return appointmentOwner;
+}
+
 const appointmentDateReducer = (appointmentDate = new Date(), action) => {
   if (action.type === 'DATE_SELECTED') {
     return action.payload;
@@ -68,6 +76,38 @@ const appointmentSlotCancelReducer = (appointmentSlot = null, action) => {
   }
 
   return appointmentSlot;
+}
+
+const appointmentDescriptionReducer = (description = '', action) => {
+  if (action.type === 'DESCRIPTION_SET') {
+    return action.payload;
+  }
+
+  return description;
+}
+
+const allVetsReducer = (allVets = [], action) => {
+  if (action.type === 'ALLVETS_SET') {
+    return action.payload;
+  }
+
+  return allVets;
+}
+
+const allOwnersReducer = (allOwners = [], action) => {
+  if (action.type === 'ALLOWNERS_SET') {
+    return action.payload;
+  }
+
+  return allOwners;
+}
+
+const allPetsReducer = (allPets = [], action) => {
+  if (action.type === 'ALLPETS_SET') {
+    return action.payload;
+  }
+
+  return allPets;
 }
 
 const existingAppointmentsReducer = (existingAppointments = [], action) => {
@@ -203,10 +243,15 @@ export default combineReducers({
   activeCancellationIndex: activeCancellationIndexReducer,
   appointmentVet: appointmentVetReducer,
   appointmentVetCancel: appointmentVetCancelReducer,
+  appointmentOwner: appointmentOwnerReducer,
   appointmentDate: appointmentDateReducer,
   appointmentMeridiem: appointmentMeridiemReducer,
   appointmentSlot: appointmentSlotReducer,
   appointmentSlotCancel: appointmentSlotCancelReducer,
+  appointmentDescription: appointmentDescriptionReducer,
+  allVets: allVetsReducer,
+  allOwners: allOwnersReducer,
+  allPetsReducer: allPetsReducer,
   existingAppointments: existingAppointmentsReducer,
   firstName: firstNameReducer,
   firstNameCancel: firstNameCancelReducer,

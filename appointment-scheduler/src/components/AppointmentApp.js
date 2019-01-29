@@ -7,9 +7,10 @@ import SnackBar from "material-ui/Snackbar";
 import Card from "material-ui/Card";
 import { Stepper } from "material-ui/Stepper";
 import VetSelector from './VetSelector';
+import OwnerSelector from './OwnerSelector';
 import DateSelector from './DateSelector';
 import TimeSelector from './TimeSelector';
-import ContactInput from './ContactInput';
+import ReasonInput from './ReasonInput';
 import AppSearchInput from './AppSearchInput';
 import AppointmentSelector from './AppointmentSelector';
 import SubmitConfirmation from './SubmitConfirmation';
@@ -72,9 +73,10 @@ class AppointmentApp extends Component {
                 linear={false}
                 >
                 <VetSelector />
+                <OwnerSelector />
                 <DateSelector />
                 <TimeSelector />
-                <ContactInput />
+                <ReasonInput />
               </Stepper>
             }
             {this.props.isAppCancellationOpen && 

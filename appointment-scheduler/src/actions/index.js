@@ -36,6 +36,13 @@ export const selectVetCancel = vet => {
   };
 }
 
+export const selectOwner = owner => {
+  return {
+    type: 'OWNER_SELECTED',
+    payload: owner
+  };
+}
+
 export const selectDate = date => {
   return {
     type: 'DATE_SELECTED',
@@ -61,6 +68,34 @@ export const selectTimeSlotCancel = slot => {
   return {
     type: 'TIMESLOT_SELECTED_CANCEL',
     payload: slot
+  };
+}
+
+export const setDescription = description => {
+  return {
+    type: 'DESCRIPTION_SET',
+    payload: description
+  };
+}
+
+export const setAllVets = allVets => {
+  return {
+    type: 'ALLVETS_SET',
+    payload: allVets
+  };
+}
+
+export const setAllOwners = allOwners => {
+  return {
+    type: 'ALLOWNERS_SET',
+    payload: allOwners
+  };
+}
+
+export const setAllPets = allPets => {
+  return {
+    type: 'ALLPETS_SET',
+    payload: allPets
   };
 }
 

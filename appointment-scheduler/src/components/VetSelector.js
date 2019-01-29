@@ -10,8 +10,12 @@ import {
 } from "material-ui/Stepper";
 import { 
   stepperNext, 
-  selectVet
+  selectVet,
+  setAllVets,
+  setSnackbarMessage,
+  openSnackbar
 } from '../actions';
+import * as AppointmentService from '../service/AppointmentService';
 
 class VetSelector extends Component {
   constructor(props) {
@@ -19,6 +23,19 @@ class VetSelector extends Component {
 
     this.handleNext = this.handleNext.bind(this);
     this.handleSetAppointmentVet = this.handleSetAppointmentVet.bind(this);
+  }
+
+  async componentDidMount() {
+    let allVets = await AppointmentService.getAllVets();
+    if (!allVets) {
+      this.props.setSnackbarMessage("Couldn't fetch vets from server");
+      this.props.openSnackbar(true);
+    }
+    this.handleSetAllVets(allVets);
+  }
+
+  handleSetAllVets(allVets) {
+    this.props.setAllVets(allVets);
   }
 
   handleSetAppointmentVet(payload) {
@@ -46,26 +63,20 @@ class VetSelector extends Component {
   }
 
   render() {
-    console.log('VetSelector props', this.props);
-    const vets = [
-      {
-        'name': 'Peter Parker',
-        'id': '123'
-      }, 
-      {
-        'name': 'Johnny Appleseed',
-        'id': '456'
-      }, 
-      {
-        'name': 'Mary Poppins',
-        'id': '789'
-      }, 
-      {
-        'name': 'Jennie Meanie',
-        'id': '098'
-      }
-    ];
-    const items = vets.map((vet, index) => <MenuItem value={index} key={index} primaryText={vet.name} />);
+    const vets = this.props.allVets;
+    const items = vets.map((vet, index) => {
+      let name = `${vet.firstName} ${vet.lastName}`;
+      let specialties = '';
+      vet.specialties.forEach((specialty, index) => {
+        if (index != 0) {
+          specialties += ', ';
+        }
+        specialties += specialty.name;
+      });
+      specialties = specialties ? specialties : 'none';
+
+      return <MenuItem value={index} key={index} primaryText={`${name} - specialties: ${specialties}`} />
+    });
     const { active, index } = this.props;
     return (
       <Step active={active} index={index}>
@@ -79,6 +90,7 @@ class VetSelector extends Component {
               this.handleSetAppointmentVet(payload)
             }
             maxHeight={200}
+            style={{width: 350}}
           >
           {items}
           </SelectField>
@@ -91,11 +103,15 @@ class VetSelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    appointmentVet: state.appointmentVet
+    appointmentVet: state.appointmentVet,
+    allVets: state.allVets
   };
 }
 
 export default connect(mapStateToProps, { 
   stepperNext, 
-  selectVet
+  selectVet,
+  setAllVets,
+  setSnackbarMessage,
+  openSnackbar
 })(VetSelector);

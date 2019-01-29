@@ -52,15 +52,13 @@ class DateSelector extends Component {
           backgroundColor="#00C853 !important"
           style={{ marginRight: 12, backgroundColor: "#00C853" }}
         />
-        {step > 0 && (
-          <FlatButton
-            label="Back"
-            disabled={true}
-            disableTouchRipple={true}
-            disableFocusRipple={true}
-            onClick={this.handlePrev}
-          />
-        )}
+        <FlatButton
+          label="Back"
+          disabled={true}
+          disableTouchRipple={true}
+          disableFocusRipple={true}
+          onClick={this.handlePrev}
+        />
       </div>
     );
   }
