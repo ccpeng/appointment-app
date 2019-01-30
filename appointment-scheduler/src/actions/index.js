@@ -71,6 +71,13 @@ export const selectTimeSlotCancel = slot => {
   };
 }
 
+export const selectPet = pet => {
+  return {
+    type: 'PET_SELECTED',
+    payload: pet
+  };
+}
+
 export const setDescription = description => {
   return {
     type: 'DESCRIPTION_SET',

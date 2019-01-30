@@ -8,6 +8,7 @@ import Card from "material-ui/Card";
 import { Stepper } from "material-ui/Stepper";
 import VetSelector from './VetSelector';
 import OwnerSelector from './OwnerSelector';
+import PetSelector from './PetSelector';
 import DateSelector from './DateSelector';
 import TimeSelector from './TimeSelector';
 import ReasonInput from './ReasonInput';
@@ -74,6 +75,7 @@ class AppointmentApp extends Component {
                 >
                 <VetSelector />
                 <OwnerSelector />
+                <PetSelector />
                 <DateSelector />
                 <TimeSelector />
                 <ReasonInput />

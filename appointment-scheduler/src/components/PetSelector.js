@@ -12,60 +12,21 @@ import {
 import { 
   stepperPrevious,
   stepperNext, 
-  selectOwner,
-  setAllOwners,
-  setAllPets,
-  setSnackbarMessage,
-  openSnackbar
+  selectPet,
 } from '../actions';
-import * as AppointmentService from '../service/AppointmentService';
+import { getAppointmentOwnerId, getAllOwnerPets } from '../utils/utils';
 
-class OwnerSelector extends Component {
+class PetSelector extends Component {
   constructor(props) {
     super(props);
 
     this.handlePrev = this.handlePrev.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.handleSetAppointmentOwner = this.handleSetAppointmentOwner.bind(this);
+    this.handleSetAppointmentPet = this.handleSetAppointmentPet.bind(this);
   }
 
-  async componentDidMount() {
-    let allOwnersAndPets = await AppointmentService.getAllOwnersAndPets();
-    if (!allOwnersAndPets) {
-      this.props.setSnackbarMessage("Couldn't fetch owners from server");
-      this.props.openSnackbar(true);
-    }
-    this.handleSetAllOwnersAndPets(allOwnersAndPets);
-  }
-
-  handleSetAllOwnersAndPets(allOwnersAndPets) {
-    let allOwners = allOwnersAndPets.map(ownerPet => {
-      return {
-        id: ownerPet.id,
-        firstName: ownerPet.firstName,
-        lastName: ownerPet.lastName
-      };
-    });
-
-    this.props.setAllOwners(allOwners);
-
-    let allPets = [];
-    
-    allOwnersAndPets.forEach(ownerPet => {
-      ownerPet.listOfPets.forEach(pet => {
-        allPets.push({
-          id: pet.id,
-          ownerId: ownerPet.id,
-          name: pet.name
-        });
-      });
-    });
-    console.log('setting allPets', allPets);
-    this.props.setAllPets(allPets);
-  }
-
-  handleSetAppointmentOwner(payload) {
-    this.props.selectOwner(payload);
+  handleSetAppointmentPet(payload) {
+    this.props.selectPet(payload);
   }
 
   handlePrev() {
@@ -99,9 +60,13 @@ class OwnerSelector extends Component {
   }
 
   render() {
-    const owners = this.props.allOwners;
-    const items = owners.map((owner, index) => {
-      let name = `${owner.firstName} ${owner.lastName}`;
+    const allPets = this.props.allPets;
+    const allOwners = this.props.allOwners;
+    const appointmentOwner = this.props.appointmentOwner;
+    const appointmentOwnerId = getAppointmentOwnerId(allOwners, appointmentOwner);
+    const allOwnerPets = getAllOwnerPets(allPets, appointmentOwnerId);
+    const items = allOwnerPets.map((pet, index) => {
+      let name = pet.name;
 
       return <MenuItem value={index} key={index} primaryText={name} />
     });
@@ -109,13 +74,13 @@ class OwnerSelector extends Component {
     return (
       <Step active={active} index={index}>
         <StepLabel>
-          Choose owner making the appointment
+          Choose the pet for the appointment
         </StepLabel>
         <StepContent>
           <SelectField
-            value={this.props.appointmentOwner}
+            value={this.props.appointmentPet}
             onChange={(evt, key, payload) =>
-              this.handleSetAppointmentOwner(payload)
+              this.handleSetAppointmentPet(payload)
             }
             maxHeight={200}
             style={{width: 350}}
@@ -131,7 +96,9 @@ class OwnerSelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    appointmentPet: state.appointmentPet,
     appointmentOwner: state.appointmentOwner,
+    allPets: state.allPets,
     allOwners: state.allOwners
   };
 }
@@ -139,9 +106,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   stepperPrevious,
   stepperNext, 
-  selectOwner,
-  setAllOwners,
-  setAllPets,
-  setSnackbarMessage,
-  openSnackbar
-})(OwnerSelector);
+  selectPet
+})(PetSelector);

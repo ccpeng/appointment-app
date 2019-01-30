@@ -86,6 +86,14 @@ const appointmentDescriptionReducer = (description = '', action) => {
   return description;
 }
 
+const appointmentPetReducer = (appointmentPet = 0, action) => {
+  if (action.type === 'PET_SELECTED') {
+    return action.payload
+  }
+
+  return appointmentPet;
+}
+
 const allVetsReducer = (allVets = [], action) => {
   if (action.type === 'ALLVETS_SET') {
     return action.payload;
@@ -249,9 +257,10 @@ export default combineReducers({
   appointmentSlot: appointmentSlotReducer,
   appointmentSlotCancel: appointmentSlotCancelReducer,
   appointmentDescription: appointmentDescriptionReducer,
+  appointmentPet: appointmentPetReducer,
   allVets: allVetsReducer,
   allOwners: allOwnersReducer,
-  allPetsReducer: allPetsReducer,
+  allPets: allPetsReducer,
   existingAppointments: existingAppointmentsReducer,
   firstName: firstNameReducer,
   firstNameCancel: firstNameCancelReducer,
