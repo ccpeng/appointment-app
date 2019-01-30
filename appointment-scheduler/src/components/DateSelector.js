@@ -5,16 +5,19 @@ import FlatButton from "material-ui/FlatButton";
 import DatePicker from "material-ui/DatePicker";
 import {
   Step,
-  Stepper,
   StepLabel,
   StepContent
 } from "material-ui/Stepper";
-import { stepperNext, selectDate } from '../actions';
+import { 
+  stepperPrevious,
+  stepperNext, 
+  selectDate } from '../actions';
 
 class DateSelector extends Component {
   constructor(props) {
     super(props);
 
+    this.handlePrev = this.handlePrev.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleSetAppointmentDate = this.handleSetAppointmentDate.bind(this);
   }
@@ -32,6 +35,10 @@ class DateSelector extends Component {
     );
   }
 
+  handlePrev() {
+    this.props.stepperPrevious();
+  }
+
   handleNext() {
     this.props.stepperNext();
   }
@@ -40,7 +47,7 @@ class DateSelector extends Component {
     this.props.selectDate(date);
   }
 
-  renderStepActions(step) {
+  renderStepActions() {
     return (
       <div style={{ margin: "12px 0" }}>
         <RaisedButton
@@ -54,7 +61,6 @@ class DateSelector extends Component {
         />
         <FlatButton
           label="Back"
-          disabled={true}
           disableTouchRipple={true}
           disableFocusRipple={true}
           onClick={this.handlePrev}
@@ -73,7 +79,7 @@ class DateSelector extends Component {
         </StepLabel>
         <StepContent>
           {this.DatePickerExampleSimple()}
-          {this.renderStepActions(this.props.index)}
+          {this.renderStepActions()}
         </StepContent>
       </Step>
     );
@@ -87,6 +93,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
+  stepperPrevious,
   stepperNext, 
   selectDate 
 })(DateSelector);

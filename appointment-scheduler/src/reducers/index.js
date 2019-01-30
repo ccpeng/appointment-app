@@ -62,7 +62,7 @@ const appointmentMeridiemReducer = (appointmentMeridiem = 0, action) => {
   return appointmentMeridiem;
 }
 
-const appointmentSlotReducer = (appointmentSlot = null, action) => {
+const appointmentSlotReducer = (appointmentSlot = 0, action) => {
   if (action.type === 'TIMESLOT_SELECTED') {
     return action.payload;
   }
