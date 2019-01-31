@@ -17,6 +17,7 @@ import {
   selectMeridiem, 
   selectTimeSlot 
 } from '../actions';
+import Constants from '../constants/constants';
 
 class TimeSelector extends Component {
   constructor(props) {
@@ -45,10 +46,10 @@ class TimeSelector extends Component {
   }
 
   renderAppointmentTimes() {
-    const slots = [...Array(10).keys()];
+    const slots = [...Array(Constants.NUMBER_TIME_SLOTS).keys()];
     return slots.map(slot => {
       const time = moment()
-        .hour(8)
+        .hour(Constants.FIRST_TIME_SLOT)
         .minute(0)
         .add(slot, "hours");
       const meridiemFiltered = this.props.appointmentMeridiem

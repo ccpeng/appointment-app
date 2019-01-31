@@ -1,5 +1,4 @@
 export const getAppointmentOwnerId = (allOwners, appointmentOwner) => {
-  console.log(`allOwners is ${allOwners} and appointmentOwner is ${appointmentOwner}`);
   if (allOwners.length !== 0) {
     return allOwners[appointmentOwner].id;
   }
@@ -15,12 +14,38 @@ export const getAllOwnerPets = (allPets, appointmentOwnerId) => {
   return [];
 }
 
-export const getAppointmentPetId = (allPets, selectedPet, appointmentOwnerId) => {
+export const getAppointmentPetId = (allPets, appointmentPet, appointmentOwnerId) => {
   const allOwnerPets = getAllOwnerPets(allPets, appointmentOwnerId);
 
   if (allOwnerPets.length !== 0) {
-    return allOwnerPets[selectedPet].id;
+    return allOwnerPets[appointmentPet].id;
   }
   
+  return null;
+}
+
+export const getAppointmentVetId = (allVets, appointmentVet) => {
+  if (allVets.length !== 0) {
+    return allVets[appointmentVet].id;
+  }
+
+  return null;
+}
+
+export const getAppointmentVetName = (allVets, appointmentVet) => {
+  if (allVets.length !== 0) {
+    const vet = allVets[appointmentVet];
+    return `${vet.firstName} ${vet.lastName}`;
+  }
+
+  return null;
+}
+
+export const getAppointmentPetName =(allPets, appointmentPet, appointmentOwnerId) => {
+  const allOwnerPets = getAllOwnerPets(allPets, appointmentOwnerId)
+  if (allOwnerPets.length !== 0) {
+    return allOwnerPets[appointmentPet].name;
+  }
+
   return null;
 }

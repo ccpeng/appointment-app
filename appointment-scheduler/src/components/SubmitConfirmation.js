@@ -3,12 +3,20 @@ import { connect } from 'react-redux';
 import moment from "moment";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import axios from "axios";
 import { 
   openConfirmation,
   setSnackbarMessage,
   openSnackbar
 } from '../actions';
+import { 
+  getAppointmentVetName, 
+  getAppointmentPetName,
+  getAppointmentOwnerId,
+  getAppointmentPetId,
+  getAppointmentVetId
+} from "../utils/utils";
+import * as AppointmentService from '../service/AppointmentService';
+import Constants from '../constants/constants';
 
 class SubmitConfirmation extends Component {
   constructor(props) {
@@ -23,26 +31,22 @@ class SubmitConfirmation extends Component {
     this.props.openConfirmation(false);
   }
 
-  handleSubmit() {
-    const API_BASE = "http://localhost:8083/";
+  async handleSubmit() {
     this.props.openConfirmation(false);
-    const newAppointment = {
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      petName: this.props.petName,
-      address: this.props.address,
-      city: this.props.city,
-      telephone: this.props.telephone,
-      slot_date: moment(this.props.appointmentDate).format("YYYY-DD-MM"),
-      slot_time: this.props.appointmentSlot
-    };
-    axios
-      .post(API_BASE + "api/appointmentCreate", newAppointment)
-      .then(() => this.handleSubmitSuccess())
-      .catch(err => {
-        console.log(err);
-        this.handleSubmitFail();
-      });
+    const description = this.props.appointmentDescription;
+    const petId = getAppointmentPetId(this.props.allPets, this.props.appointmentPet, getAppointmentOwnerId(this.props.allOwners, this.props.appointmentOwner));
+    const vetId = getAppointmentVetId(this.props.allVets, this.props.appointmentVet);
+    const dateTime = moment(this.props.appointmentDate)
+      .hour(Constants.FIRST_TIME_SLOT)
+      .minute(0)
+      .add(this.props.appointmentSlot, "hours")
+      .format("YYYY-MM-DDTHH:mm");
+    const response = await AppointmentService.postAppointment(description, petId, vetId, dateTime);
+    if (response && response === 'SUCCESS') {
+      this.handleSubmitSuccess();
+    } else {
+      this.handleSubmitFail();
+    }
   }
 
   handleSubmitSuccess() {
@@ -51,7 +55,8 @@ class SubmitConfirmation extends Component {
   }
 
   handleSubmitFail() {
-    this.props.setSnackbarMessage("Appointment failed to save.");
+    const failMessage = 'Appointment failed to save.';
+    this.props.setSnackbarMessage(failMessage);
     this.props.openSnackbar(true);
   }
 
@@ -60,22 +65,16 @@ class SubmitConfirmation extends Component {
     return (
       <section>
         <p>
-          Owner's Name:{" "}
+          Vet's Name: 
           <span style={spanStyle}>
-            {this.props.firstName} {this.props.lastName}
+            {getAppointmentVetName(this.props.allVets, this.props.appointmentVet)}
           </span>
         </p>
         <p>
-          Pet's Name: <span style={spanStyle}>{this.props.petName}</span>
-        </p>
-        <p>
-          Address: <span style={spanStyle}>{this.props.address}</span>
-        </p>
-        <p>
-          City: <span style={spanStyle}>{this.props.city}</span>
-        </p>
-        <p>
-          Telephone: <span style={spanStyle}>{this.props.telephone}</span>
+          Pet's Name: 
+          <span style={spanStyle}>
+            {getAppointmentPetName(this.props.allPets, this.props.appointmentPet, getAppointmentOwnerId(this.props.allOwners, this.props.appointmentOwner))}
+          </span>
         </p>
         <p>
           Appointment:{" "}
@@ -135,7 +134,14 @@ const mapStateToProps = (state) => {
     telephone: state.telephone,
     isConfirmationOpen: state.isConfirmationOpen,
     appointmentDate: state.appointmentDate,
-    appointmentSlot: state.appointmentSlot
+    appointmentSlot: state.appointmentSlot,
+    allVets: state.allVets,
+    appointmentVet: state.appointmentVet,
+    allPets: state.allPets,
+    appointmentPet: state.appointmentPet,
+    allOwners: state.allOwners,
+    appointmentOwner: state.appointmentOwner,
+    appointmentDescription: state.appointmentDescription
   };
 }
 

@@ -10,7 +10,7 @@ const getAllVets = async () => {
       responseBody = response.data;
     }
   } catch (error) {
-    console.error(error);
+    console.error('error', error.message);
   }
 
   return responseBody;
@@ -25,10 +25,30 @@ const getAllOwnersAndPets = async () => {
       responseBody = response.data;
     }
   } catch (error) {
-    console.error(error);
+    console.error('error', error.message);
   }
 
   return responseBody;
+}
+
+const postAppointment = async (description, petId, vetId, dateTime) => {
+  let responseStatus = null;
+
+  try {
+    const response = await axios.post(Constants.API_BASE + 'visits/addAppointment', {
+      description,
+      petId,
+      vetId,
+      dateTime
+    });
+    if (response.status >= 200 && response.status < 300) {
+      responseStatus = 'SUCCESS';
+    }
+  } catch (error) {
+    console.error('error', error.message);
+  }
+
+  return responseStatus;
 }
 
 const getExistingAppointments = new Promise((resolve, reject) => {
@@ -53,5 +73,6 @@ const getExistingAppointments = new Promise((resolve, reject) => {
 export {
   getAllVets,
   getAllOwnersAndPets,
+  postAppointment,
   getExistingAppointments
 };
