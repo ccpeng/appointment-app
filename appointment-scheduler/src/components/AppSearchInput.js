@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
 import {
   Step,
   StepLabel,
@@ -12,48 +11,45 @@ import {
 import * as AppointmentService from '../service/AppointmentService';
 import { 
   stepperNextCancel, 
-  setFirstNameCancel,
-  setLastNameCancel,
-  setPetNameCancel,
   selectVetCancel,
+  selectPetCancel,
   setExistingAppointments
 } from '../actions';
+import { getAppointmentVetId, getAppointmentPetCancelId } from '../utils/utils';
 
 class AppSearchInput extends Component {
   constructor(props) {
     super(props);
 
     this.handleNext = this.handleNext.bind(this);
-    this.handleFirstNameCancel = this.handleFirstNameCancel.bind(this);
-    this.handleLastNameCancel = this.handleLastNameCancel.bind(this);
-    this.handlePetNameCancel = this.handlePetNameCancel.bind(this);
+    this.handleAppointmentPetCancel = this.handleAppointmentPetCancel.bind(this);
     this.handleAppointmentVetCancel = this.handleAppointmentVetCancel.bind(this);
+    this.handleExistingAppointments = this.handleExistingAppointments.bind(this);
   }
 
   async handleNext() {
-    const existingAppointments = await AppointmentService.getExistingAppointments;
-    this.props.setExistingAppointments(existingAppointments);
+    const existingAppointments = await AppointmentService.getExistingAppointments(
+      getAppointmentVetId(this.props.allVets, this.props.appointmentVetCancel),
+      getAppointmentPetCancelId(this.props.allPets, this.props.appointmentPetCancel));
+    this.handleExistingAppointments(existingAppointments);
     this.props.stepperNextCancel();
   }
 
-  handleFirstNameCancel(firstName) {
-    console.log('first name');
-    this.props.setFirstNameCancel(firstName);
+  handleExistingAppointments(existingAppointments) {
+    if (existingAppointments) {
+      this.props.setExistingAppointments(existingAppointments);
+    }
   }
 
-  handleLastNameCancel(lastName) {
-    this.props.setLastNameCancel(lastName);
-  }
-
-  handlePetNameCancel(petName) {
-    this.props.setPetNameCancel(petName);
+  handleAppointmentPetCancel(payload) {
+    this.props.selectPetCancel(payload);
   }
 
   handleAppointmentVetCancel(payload) {
     this.props.selectVetCancel(payload);
   }
 
-  renderStepActions(isCancellationFilled) {
+  renderStepActions() {
     return (
       <div style={{ margin: "12px 0" }}>
         <RaisedButton
@@ -62,7 +58,6 @@ class AppSearchInput extends Component {
           disableFocusRipple={true}
           primary={true}
           onClick={this.handleNext}
-          disabled={!isCancellationFilled}
           backgroundColor="#00C853 !important"
           style={{ marginRight: 12, backgroundColor: "#00C853" }}
         />
@@ -71,38 +66,16 @@ class AppSearchInput extends Component {
   }
 
   render() {
-    const vets = [
-      {
-        'name': 'Peter Parker',
-        'id': '123'
-      }, 
-      {
-        'name': 'Johnny Appleseed',
-        'id': '456'
-      }, 
-      {
-        'name': 'Mary Poppins',
-        'id': '789'
-      }, 
-      {
-        'name': 'Jennie Meanie',
-        'id': '098'
-      }
-    ];
-    const items = vets.map((vet, index) => <MenuItem value={index} key={index} primaryText={vet.name} />);
-
-    const isCancellationFilled = 
-      this.props.firstNameCancel &&
-      this.props.lastNameCancel && 
-      this.props.petNameCancel;
-
-    console.log('AppSearchInput props' ,this.props);
+    const vets = this.props.allVets;
+    const vetItems = vets.map((vet, index) => <MenuItem value={index} key={index} primaryText={`${vet.firstName} ${vet.lastName}`} />);
+    const pets = this.props.allPets;
+    const petItems = pets.map((pet, index) => <MenuItem value={index} key={index} primaryText={pet.name} />)
 
     const { active, index } = this.props;
     return (
       <Step active={active} index={index}>
         <StepLabel>
-          Search for existing appointment(s)
+          Search for existing appointment(s) by Vet and Pet
         </StepLabel>
         <StepContent>
           <SelectField
@@ -112,37 +85,18 @@ class AppSearchInput extends Component {
             }
             maxHeight={200}
           >
-          {items}
+          {vetItems}
           </SelectField>
-          <div>
-            <section>
-              <TextField
-                style={{ display: "block" }}
-                name="owner_first_name"
-                hintText="Owner's First Name"
-                floatingLabelText="Owner's First Name"
-                value={this.props.firstNameCancel}
-                onChange={(evt, newValue) => this.handleFirstNameCancel(newValue)}
-              />
-              <TextField
-                style={{ display: "block" }}
-                name="owner_last_name"
-                hintText="Owner's Last Name"
-                floatingLabelText="Owner's Last Name"
-                value={this.props.lastNameCancel}
-                onChange={(evt, newValue) => this.handleLastNameCancel(newValue)}
-              />
-              <TextField
-                style={{ display: "block" }}
-                name="pet_name"
-                hintText="Pet's Name"
-                floatingLabelText="Pet's Name"
-                value={this.props.petNameCancel}
-                onChange={(evt, newValue) => this.handlePetNameCancel(newValue)}
-              />
-            </section>
-          </div>
-          {this.renderStepActions(isCancellationFilled)}
+          <SelectField
+            value={this.props.appointmentPetCancel}
+            onChange={(evt, key, payload) =>
+              this.handleAppointmentPetCancel(payload)
+            }
+            maxHeight={200}
+          >
+          {petItems}
+          </SelectField>
+          {this.renderStepActions()}
         </StepContent>
       </Step>
     );
@@ -151,18 +105,16 @@ class AppSearchInput extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    firstNameCancel: state.firstNameCancel,
-    lastNameCancel: state.lastNameCancel,
-    petNameCancel: state.petNameCancel,
+    allVets: state.allVets,
+    allPets: state.allPets,
+    appointmentPetCancel: state.appointmentPetCancel,
     appointmentVetCancel: state.appointmentVetCancel
   };
 }
 
 export default connect(mapStateToProps, { 
   stepperNextCancel, 
-  setFirstNameCancel,
-  setLastNameCancel,
-  setPetNameCancel,
+  selectPetCancel,
   selectVetCancel,
   setExistingAppointments
 })(AppSearchInput);

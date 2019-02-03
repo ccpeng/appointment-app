@@ -70,7 +70,6 @@ class DateSelector extends Component {
   }
 
   render () {
-    console.log('DateSelector props:', this.props);
     const { active, index } = this.props;
     return (
       <Step active={active} index={index}>

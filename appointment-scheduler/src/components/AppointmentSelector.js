@@ -18,6 +18,8 @@ import {
   openAppCancellation,
   selectTimeSlotCancel
 } from '../actions';
+import { getAppointmentCancelId } from '../utils/utils';
+import * as AppointmentService from '../service/AppointmentService';
 
 class AppointmentSelector extends Component {
   constructor(props) {
@@ -32,15 +34,13 @@ class AppointmentSelector extends Component {
     this.props.stepperPreviousCancel();
   }
 
-  handleSubmit() {
-    const API_BASE = "http://localhost:8083/";
-    const appointmentId = '123';
-    axios
-      .post(API_BASE + "api/appointmentCancel", appointmentId)
-      .then(() => this.handleSubmitSuccess())
-      .catch(err => {
-        this.handleSubmitFail();
-      });
+  async handleSubmit() {
+    const response = await AppointmentService.cancelAppointment(getAppointmentCancelId(this.props.existingAppointments, this.props.appointmentSlotCancel));
+    if (response && response === 'SUCCESS') {
+      this.handleSubmitSuccess();
+    } else {
+      this.handleSubmitFail();
+    }
   }
 
   handleSubmitSuccess() {
@@ -63,7 +63,7 @@ class AppointmentSelector extends Component {
     return this.props.existingAppointments.map((appointment, index) => {
       return (
         <RadioButton
-          label={moment.unix(appointment.timestamp).format("MM-DD-YYYY, h:mm a")}
+          label={moment(appointment.dateTime).format("MM-DD-YYYY, h:mm a")}
           key={index}
           value={index}
           style={{
@@ -100,7 +100,6 @@ class AppointmentSelector extends Component {
   }
 
   render() {
-    console.log('AppointmentSelector props', this.props);
     const { active, index } = this.props;
     const isAppointmentSelected = this.props.appointmentSlotCancel !== null;
     

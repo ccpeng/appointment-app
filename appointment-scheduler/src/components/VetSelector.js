@@ -68,7 +68,7 @@ class VetSelector extends Component {
       let name = `${vet.firstName} ${vet.lastName}`;
       let specialties = '';
       vet.specialties.forEach((specialty, index) => {
-        if (index != 0) {
+        if (index !== 0) {
           specialties += ', ';
         }
         specialties += specialty.name;

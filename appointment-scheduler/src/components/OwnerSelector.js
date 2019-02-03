@@ -60,7 +60,6 @@ class OwnerSelector extends Component {
         });
       });
     });
-    console.log('setting allPets', allPets);
     this.props.setAllPets(allPets);
   }
 

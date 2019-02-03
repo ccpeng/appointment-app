@@ -78,6 +78,13 @@ export const selectPet = pet => {
   };
 }
 
+export const selectPetCancel = pet => {
+  return {
+    type: 'PET_SELECTED_CANCEL',
+    payload: pet
+  };
+}
+
 export const setDescription = description => {
   return {
     type: 'DESCRIPTION_SET',
@@ -103,69 +110,6 @@ export const setAllPets = allPets => {
   return {
     type: 'ALLPETS_SET',
     payload: allPets
-  };
-}
-
-export const setFirstName = firstName => {
-  return {
-    type: 'FIRSTNAME_SET',
-    payload: firstName
-  };
-}
-
-export const setFirstNameCancel = firstName => {
-  return {
-    type: 'FIRSTNAME_SET_CANCEL',
-    payload: firstName
-  };
-}
-
-export const setLastName = lastName => {
-  return {
-    type: 'LASTNAME_SET',
-    payload: lastName
-  };
-}
-
-export const setLastNameCancel = lastName => {
-  return {
-    type: 'LASTNAME_SET_CANCEL',
-    payload: lastName
-  };
-}
-
-export const setAddress = address => {
-  return {
-    type: 'ADDRESS_SET',
-    payload: address
-  };
-}
-
-export const setCity = city => {
-  return {
-    type: 'CITY_SET',
-    payload: city
-  };
-}
-
-export const setTelephone = telephone => {
-  return {
-    type: 'TELEPHONE_SET',
-    payload: telephone
-  };
-}
-
-export const setPetName = petName => {
-  return {
-    type: 'PETNAME_SET',
-    payload: petName
-  };
-}
-
-export const setPetNameCancel = petName => {
-  return {
-    type: 'PETNAME_SET_CANCEL',
-    payload: petName
   };
 }
 

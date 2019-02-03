@@ -70,12 +70,12 @@ const appointmentSlotReducer = (appointmentSlot = 0, action) => {
   return appointmentSlot;
 }
 
-const appointmentSlotCancelReducer = (appointmentSlot = null, action) => {
+const appointmentSlotCancelReducer = (appointmentSlotCancel = null, action) => {
   if (action.type === 'TIMESLOT_SELECTED_CANCEL') {
     return action.payload;
   }
 
-  return appointmentSlot;
+  return appointmentSlotCancel;
 }
 
 const appointmentDescriptionReducer = (description = '', action) => {
@@ -92,6 +92,14 @@ const appointmentPetReducer = (appointmentPet = 0, action) => {
   }
 
   return appointmentPet;
+}
+
+const appointmentPetCancelReducer = (appointmentPetCancel = 0, action) => {
+  if (action.type === 'PET_SELECTED_CANCEL') {
+    return action.payload
+  }
+
+  return appointmentPetCancel;
 }
 
 const allVetsReducer = (allVets = [], action) => {
@@ -124,78 +132,6 @@ const existingAppointmentsReducer = (existingAppointments = [], action) => {
   }
 
   return existingAppointments;
-}
-
-const firstNameReducer = (firstName = '', action) => {
-  if (action.type === 'FIRSTNAME_SET') {
-    return action.payload;
-  }
-
-  return firstName;
-}
-
-const firstNameCancelReducer = (firstNameCancel = '', action) => {
-  if (action.type === 'FIRSTNAME_SET_CANCEL') {
-    return action.payload;
-  }
-
-  return firstNameCancel;
-}
-
-const lastNameReducer = (lastName = '', action) => {
-  if (action.type === 'LASTNAME_SET') {
-    return action.payload;
-  }
-
-  return lastName;
-}
-
-const lastNameCancelReducer = (lastNameCancel = '', action) => {
-  if (action.type === 'LASTNAME_SET_CANCEL') {
-    return action.payload;
-  }
-
-  return lastNameCancel;
-}
-
-const addressReducer = (address = '', action) => {
-  if (action.type === 'ADDRESS_SET') {
-    return action.payload;
-  }
-
-  return address;
-}
-
-const cityReducer = (city = '', action) => {
-  if (action.type === 'CITY_SET') {
-    return action.payload;
-  }
-
-  return city;
-}
-
-const telephoneReducer = (telephone = '', action) => {
-  if (action.type === 'TELEPHONE_SET') {
-    return action.payload;
-  }
-
-  return telephone;
-}
-
-const petNameReducer = (petName = '', action) => {
-  if (action.type === 'PETNAME_SET') {
-    return action.payload;
-  }
-
-  return petName;
-}
-
-const petNameCancelReducer = (petNameCancel = '', action) => {
-  if (action.type === 'PETNAME_SET_CANCEL') {
-    return action.payload;
-  }
-
-  return petNameCancel;
 }
 
 const confirmationReducer = (isConfirmationOpen = false, action) => {
@@ -258,19 +194,11 @@ export default combineReducers({
   appointmentSlotCancel: appointmentSlotCancelReducer,
   appointmentDescription: appointmentDescriptionReducer,
   appointmentPet: appointmentPetReducer,
+  appointmentPetCancel: appointmentPetCancelReducer,
   allVets: allVetsReducer,
   allOwners: allOwnersReducer,
   allPets: allPetsReducer,
   existingAppointments: existingAppointmentsReducer,
-  firstName: firstNameReducer,
-  firstNameCancel: firstNameCancelReducer,
-  lastName: lastNameReducer,
-  lastNameCancel: lastNameCancelReducer,
-  address: addressReducer,
-  city: cityReducer,
-  telephone: telephoneReducer,
-  petName: petNameReducer,
-  petNameCancel: petNameCancelReducer,
   isConfirmationOpen: confirmationReducer,
   snackbarMessage: snackbarMessageReducer,
   isSnackbarOpen: snackbarReducer,

@@ -51,28 +51,45 @@ const postAppointment = async (description, petId, vetId, dateTime) => {
   return responseStatus;
 }
 
-const getExistingAppointments = new Promise((resolve, reject) => {
-  setTimeout(() => resolve(
-    [
-      {
-        'timestamp': 1548547828,
-        'id': '123'
-      },
-      {
-        'timestamp': 1548548828,
-        'id': '456'
-      },
-      {
-        'timestamp': 1548549828,
-        'id': '987'
+const getExistingAppointments = async (vetId, petId) => {
+  let responseBody = null;
+
+  try {
+    const response = await axios.get(Constants.API_BASE + 'visits/findByVetIdAndPetId', {
+      params: {
+        vetId,
+        petId
       }
-    ]
-  ), 1000)
-});
+    });
+    if (response.status >= 200 && response.status < 300) {
+      responseBody = response.data;
+    }
+  } catch (error) {
+    console.log('error', error.message);
+  }
+
+  return responseBody;
+}
+
+const cancelAppointment = async (id) => {
+  let responseStatus = null;
+
+  try {
+    const response = await axios.delete(Constants.API_BASE + `visits/cancelAppointment/${id}`);
+    if (response.status >= 200 && response.status < 300) {
+      responseStatus = 'SUCCESS';
+    }
+  } catch (error) {
+    console.error('error', error.message);
+  }
+
+  return responseStatus;
+}
 
 export {
   getAllVets,
   getAllOwnersAndPets,
   postAppointment,
-  getExistingAppointments
+  getExistingAppointments,
+  cancelAppointment
 };

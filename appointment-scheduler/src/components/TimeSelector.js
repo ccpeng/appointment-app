@@ -93,7 +93,6 @@ class TimeSelector extends Component {
   }
 
   render () {
-    console.log('TimeSelector props:', this.props);
     const { active, index } = this.props;
     return (
       <Step active={active} index={index}>

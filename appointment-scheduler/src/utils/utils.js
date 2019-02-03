@@ -41,10 +41,26 @@ export const getAppointmentVetName = (allVets, appointmentVet) => {
   return null;
 }
 
-export const getAppointmentPetName =(allPets, appointmentPet, appointmentOwnerId) => {
+export const getAppointmentPetName = (allPets, appointmentPet, appointmentOwnerId) => {
   const allOwnerPets = getAllOwnerPets(allPets, appointmentOwnerId)
   if (allOwnerPets.length !== 0) {
     return allOwnerPets[appointmentPet].name;
+  }
+
+  return null;
+}
+
+export const getAppointmentCancelId = (existingAppointments, appoinmentSlotCancel) => {
+  if (existingAppointments.length !== 0) {
+    return existingAppointments[appoinmentSlotCancel].id;
+  }
+
+  return null;
+}
+
+export const getAppointmentPetCancelId = (allPets, appointmentPetCancel) => {
+  if (allPets.length !== 0) {
+    return allPets[appointmentPetCancel].id;
   }
 
   return null;

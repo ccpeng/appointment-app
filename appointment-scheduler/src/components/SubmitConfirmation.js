@@ -126,12 +126,6 @@ class SubmitConfirmation extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    firstName: state.firstName,
-    lastName: state.lastName,
-    petName: state.petName,
-    address: state.address,
-    city: state.city,
-    telephone: state.telephone,
     isConfirmationOpen: state.isConfirmationOpen,
     appointmentDate: state.appointmentDate,
     appointmentSlot: state.appointmentSlot,
