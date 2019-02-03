@@ -27,7 +27,6 @@ class SubmitConfirmation extends Component {
   }
 
   handleCancel() {
-    console.log('submitprops', this.props);
     this.props.openConfirmation(false);
   }
 

@@ -32,7 +32,6 @@ class ReasonInput extends Component {
   }
 
   handleSubmit() {
-    console.log('contact submitted');
     this.props.openConfirmation(true);
   }
 
